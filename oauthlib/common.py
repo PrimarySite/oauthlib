@@ -44,6 +44,8 @@ CLIENT_ID_CHARACTER_SET = (r' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMN'
 SANITIZE_PATTERN = re.compile(r'([^&;]*(?:password|token)[^=]*=)[^&;]+', re.IGNORECASE)
 INVALID_HEX_PATTERN = re.compile(r'%[^0-9A-Fa-f]|%[0-9A-Fa-f][^0-9A-Fa-f]')
 
+TOKEN_LENGTH = 80
+CLIENT_ID_LENGTH = 40
 always_safe = ('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                'abcdefghijklmnopqrstuvwxyz'
                '0123456789' '_.-')
@@ -222,7 +224,7 @@ def generate_timestamp():
     return unicode_type(int(time.time()))
 
 
-def generate_token(length=30, chars=UNICODE_ASCII_CHARACTER_SET):
+def generate_token(length=TOKEN_LENGTH, chars=UNICODE_ASCII_CHARACTER_SET):
     """Generates a non-guessable OAuth token
 
     OAuth (1 and 2) does not specify the format of tokens except that they
@@ -258,7 +260,7 @@ def verify_signed_token(public_pem, token):
     return jwt.decode(token, public_pem, algorithms=['RS256'])
 
 
-def generate_client_id(length=30, chars=CLIENT_ID_CHARACTER_SET):
+def generate_client_id(length=CLIENT_ID_LENGTH, chars=CLIENT_ID_CHARACTER_SET):
     """Generates an OAuth client_id
 
     OAuth 2 specify the format of client_id in
