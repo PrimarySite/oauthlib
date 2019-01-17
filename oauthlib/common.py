@@ -45,7 +45,6 @@ SANITIZE_PATTERN = re.compile(r'([^&;]*(?:password|token)[^=]*=)[^&;]+', re.IGNO
 INVALID_HEX_PATTERN = re.compile(r'%[^0-9A-Fa-f]|%[0-9A-Fa-f][^0-9A-Fa-f]')
 
 TOKEN_LENGTH = 50
-CLIENT_ID_LENGTH = 30
 always_safe = ('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                'abcdefghijklmnopqrstuvwxyz'
                '0123456789' '_.-')
@@ -260,7 +259,7 @@ def verify_signed_token(public_pem, token):
     return jwt.decode(token, public_pem, algorithms=['RS256'])
 
 
-def generate_client_id(length=CLIENT_ID_LENGTH, chars=CLIENT_ID_CHARACTER_SET):
+def generate_client_id(length=30, chars=CLIENT_ID_CHARACTER_SET):
     """Generates an OAuth client_id
 
     OAuth 2 specify the format of client_id in
